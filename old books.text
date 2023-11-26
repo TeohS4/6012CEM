@@ -1,0 +1,207 @@
+import React from 'react';
+import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import Toast from 'react-native-toast-message';
+
+export default function Books({ navigation }) {
+  const addCartMsg = (bookTitle) => {
+    Toast.show({
+      type: 'success',
+      text1: `Added ${bookTitle} to Cart`,
+      position: 'top',
+      visibilityTime: 900,
+    });
+  };
+
+  return (
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
+
+        <Text style={styles.bookTitle}>
+          <>
+            <Pressable onPress={() => navigation.navigate('Wishlist')}><Icon name="heart" size={20} color="red" style={styles.wishlistIcon} /></Pressable>
+
+            {' List of Books'}
+          </>
+        </Text>
+
+        {/* Categories Bar */}
+        <View style={styles.categoriesBar}>
+          <Pressable onPress={() => handlePress('All Books')}>
+            <Text style={styles.categoryTextActive}>All Books</Text>
+          </Pressable>
+          <Pressable onPress={() => handlePress('Horror')}>
+            <Text style={styles.categoryText}>Horror</Text>
+          </Pressable>
+          <Pressable onPress={() => handlePress('Sci-Fi')}>
+            <Text style={styles.categoryText}>Sci-Fi</Text>
+          </Pressable>
+          <Pressable onPress={() => handlePress('Fiction')}>
+            <Text style={styles.categoryText}>Fiction</Text>
+          </Pressable>
+        </View>
+
+        {/* List of Books */}
+        <View style={styles.bookContainer}>
+          {/* Book Item */}
+          <View style={styles.bookItem}>
+            <Pressable onPress={() => navigation.navigate('BookDetails')}>
+              <Image source={require('./assets/futurama.png')} style={styles.bookImage} />
+            </Pressable>
+            <View style={styles.bookInfo}>
+              <Text style={styles.bookTitle}>Futurama</Text>
+              <Text style={styles.bookCategory}>Sci-Fi</Text>
+              <Text style={styles.bookPrice}>RM 12</Text>
+            </View>
+            <Pressable style={styles.addToCartButton} onPress={() => addCartMsg('futurama')}>
+              <Text style={styles.addToCartText}>Add to Cart</Text>
+            </Pressable>
+          </View>
+          <View style={styles.horizontalLine} />
+
+          <View style={styles.bookItem}>
+            <Image source={require('./assets/bird.png')} style={styles.bookImage} />
+            <View style={styles.bookInfo}>
+              <Text style={styles.bookTitle}>To kill a Mocking Bird</Text>
+              <Text style={styles.bookCategory}>Fiction</Text>
+              <Text style={styles.bookPrice}>RM 10</Text>
+            </View>
+            <Pressable style={styles.addToCartButton} onPress={() => addCartMsg('To kill a Mocking Bird')}>
+              <Text style={styles.addToCartText}>Add to Cart</Text>
+            </Pressable>
+          </View>
+          <View style={styles.horizontalLine} />
+
+          <View style={styles.bookItem}>
+            <Image source={require('./assets/IT.png')} style={styles.bookImage} />
+            <View style={styles.bookInfo}>
+              <Text style={styles.bookTitle}>IT - Stephen King</Text>
+              <Text style={styles.bookCategory}>Horror</Text>
+              <Text style={styles.bookPrice}>RM 20</Text>
+            </View>
+            <Pressable style={styles.addToCartButton} onPress={() => addCartMsg('IT - Stephen King')}>
+              <Text style={styles.addToCartText}>Add to Cart</Text>
+            </Pressable>
+          </View>
+          <View style={styles.horizontalLine} />
+
+          <View style={styles.bookItem}>
+            <Image source={require('./assets/slayer.png')} style={styles.bookImage} />
+            <View style={styles.bookInfo}>
+              <Text style={styles.bookTitle}>Demon Slayer Vol 1</Text>
+              <Text style={styles.bookCategory}>Horror</Text>
+              <Text style={styles.bookPrice}>RM 15</Text>
+            </View>
+            <View style={styles.addToCartContainer}>
+              <Pressable style={styles.addToCartButton} onPress={() => addCartMsg('Demon Slayer Vol 1')}>
+                <Text style={styles.addToCartText}>Add to Cart</Text>
+              </Pressable>
+            </View>
+          </View>
+          <View style={styles.horizontalLine} />
+
+          <View style={styles.bookItem}>
+            <Image source={require('./assets/shining.png')} style={styles.bookImage} />
+            <View style={styles.bookInfo}>
+              <Text style={styles.bookTitle}>The Shining</Text>
+              <Text style={styles.bookCategory}>Horror</Text>
+              <Text style={styles.bookPrice}>RM 35</Text>
+            </View>
+            <Pressable style={styles.addToCartButton} onPress={() => addCartMsg('The Shining')}>
+              <Text style={styles.addToCartText}>Add to Cart</Text>
+            </Pressable>
+          </View>
+
+          <View style={styles.bookItem}>
+            <Image source={require('./assets/aliens.png')} style={styles.bookImage} />
+            <View style={styles.bookInfo}>
+              <Text style={styles.bookTitle}>Aliens</Text>
+              <Text style={styles.bookCategory}>Horror</Text>
+              <Text style={styles.bookPrice}>RM 25</Text>
+            </View>
+            <Pressable style={styles.addToCartButton} onPress={() => addCartMsg('Aliens')}>
+              <Text style={styles.addToCartText}>Add to Cart</Text>
+            </Pressable>
+          </View>
+
+        </View>
+      </ScrollView>
+      <Toast ref={(ref) => Toast.setRef(ref)} />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+  },
+
+  categoriesBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    backgroundColor: '#ccc',
+    width: '100%',
+    padding: 10,
+  },
+  categoryText: {
+    marginHorizontal: 10,
+    fontSize: 14,
+  },
+  categoryTextActive: {
+    fontWeight: 'bold',
+    color: 'yellow',
+    fontSize: 14,
+    textShadowColor: 'black',
+    textShadowOffset: { width: 0.3, height: 0.3 },
+    textShadowRadius: 1,
+  },
+  bookContainer: {
+    width: '100%',
+    marginTop: 20,
+    paddingHorizontal: 10,
+  },
+  bookItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  bookImage: {
+    width: 80,
+    height: 120,
+    marginRight: 10,
+  },
+  bookInfo: {
+    flex: 1,
+  },
+  bookTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  bookCategory: {
+    fontSize: 14,
+    color: '#666',
+  },
+  bookPrice: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginTop: 5,
+  },
+  addToCartButton: {
+    backgroundColor: 'black',
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  addToCartText: {
+    color: 'white',
+  },
+  horizontalLine: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    marginBottom: 10,
+  },
+});
