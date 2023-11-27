@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Pressable, TextInput, Image, TouchableOpacity }
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Toast from 'react-native-toast-message';
 import { Platform } from 'react-native';
+import { Menu, Divider, Provider } from 'react-native-paper';
 
 let ImagePicker = null;
 
@@ -16,7 +17,16 @@ export default function AddBook({ navigation }) {
     const [bookPrice, setBookPrice] = useState('');
     const [bookCategory, setBookCategory] = useState('');
     const [bookDescription, setBookDescription] = useState('');
-    
+
+    const [selectedCategory, setSelectedCategory] = useState('Fiction'); // Default category
+    const [visible, setVisible] = useState(false); // Dropdown visibility state
+    const showMenu = () => setVisible(true);
+    const hideMenu = () => setVisible(false);
+    const onCategorySelect = (category) => {
+        setSelectedCategory(category);
+        hideMenu();
+    };
+
     const handleImageUpload = () => {
         if (Platform.OS !== 'web' && ImagePicker) {
             const options = {
@@ -75,7 +85,7 @@ export default function AddBook({ navigation }) {
         <View style={styles.container}>
             <View style={styles.header}>
                 <Text style={styles.title}>Add New Book</Text>
-                <Pressable onPress={()=>navigation.navigate('AdminLogin')} style={styles.logoutButton}>
+                <Pressable onPress={() => navigation.navigate('AdminLogin')} style={styles.logoutButton}>
                     <Text style={styles.logoutText}>Logout</Text>
                 </Pressable>
             </View>
@@ -102,12 +112,18 @@ export default function AddBook({ navigation }) {
                 onChangeText={setBookPrice}
                 keyboardType="numeric"
             />
-            <TextInput
-                style={styles.input}
-                placeholder="Book Category"
-                value={bookCategory}
-                onChangeText={setBookCategory}
-            />
+            <Menu
+                visible={visible}
+                onDismiss={hideMenu}
+                anchor={<Pressable onPress={showMenu}><TextInput style={styles.input} value={selectedCategory} editable={false} /></Pressable>}
+            >
+                <Menu.Item onPress={() => onCategorySelect('Fiction')} title="Fiction" />
+                <Menu.Item onPress={() => onCategorySelect('Non-Fiction')} title="Non-Fiction" />
+                <Menu.Item onPress={() => onCategorySelect('Science Fiction')} title="Science Fiction" />
+                <Menu.Item onPress={() => onCategorySelect('Horror')} title="Horror" />
+                <Menu.Item onPress={() => onCategorySelect('Romance')} title="Romance" />
+                <Menu.Item onPress={() => onCategorySelect('Others')} title="Others" />
+            </Menu>
             <TextInput
                 style={[styles.input, { height: 100 }]}
                 placeholder="Book Description"

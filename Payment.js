@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, Pressable, Image, Platform } from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import SelectDropdown from 'react-native-select-dropdown';
+import { Menu, Divider, Provider } from 'react-native-paper';
 
 export default function Payment({ navigation }) {
     const bookData = [
@@ -19,11 +19,14 @@ export default function Payment({ navigation }) {
         },
     ];
 
-    const paymentMethods = [
-        'Credit Card',
-        'Cash On Delivery',
-        'PayPal',
-    ];
+    const [selectedCategory, setSelectedCategory] = useState('Cash on Delivery'); // Default method
+    const [visible, setVisible] = useState(false); // Dropdown visibility state
+    const showMenu = () => setVisible(true);
+    const hideMenu = () => setVisible(false);
+    const onCategorySelect = (category) => {
+        setSelectedCategory(category);
+        hideMenu();
+    };
 
     return (
         <View style={styles.container}>
@@ -52,25 +55,17 @@ export default function Payment({ navigation }) {
 
             <View style={styles.bottomSection}>
 
-            <Text style={styles.priceLabel}>Select Payment Method:</Text>
+                <Text style={styles.priceLabel}>Select Payment Method:</Text>
 
-            <View style={styles.dropdownContainer}>
-            <SelectDropdown
-                data={paymentMethods}
-                onSelect={(selectedItem, index) => {
-                    console.log(selectedItem, index); // Handle the selected payment method
-                }}
-                buttonTextAfterSelection={(selectedItem, index) => {
-                    return selectedItem; // Display selected payment method as button text
-                }}
-                rowTextForSelection={(item, index) => {
-                    return item; // Display payment methods in the dropdown
-                }}
-                dropdownStyle={styles.dropdown}
-                buttonStyle={styles.buttonStyle}
-                buttonTextStyle={styles.buttonTextStyle}
-            />
-        </View>
+                <Menu
+                    visible={visible}
+                    onDismiss={hideMenu}
+                    anchor={<Pressable onPress={showMenu}><TextInput style={styles.input} value={selectedCategory} editable={false} /></Pressable>}
+                >
+                    <Menu.Item onPress={() => onCategorySelect('Cash On Delivery')} title="Cash On Delivery" />
+                    <Menu.Item onPress={() => onCategorySelect('Debit / Credit Card')} title="Debit / Credit Card" />
+                    <Menu.Item onPress={() => onCategorySelect('PayPal')} title="PayPal" />
+                </Menu>
 
                 <View style={styles.priceRow}>
                     <Text style={styles.priceLabel}>Total Price:</Text>
@@ -91,6 +86,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         margin: 12,
     },
+    input: {
+        borderWidth: 1,
+        borderColor: 'darkgrey', 
+        borderRadius: 8,
+        backgroundColor: 'white',
+        paddingHorizontal: 12,
+        paddingVertical: 8, 
+      },
     title: {
         fontWeight: 'bold',
         fontSize: 20,

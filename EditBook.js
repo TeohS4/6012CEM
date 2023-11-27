@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Pressable, TextInput, Image } from 'react-native';
 import Toast from 'react-native-toast-message';
+import { Menu, Divider, Provider } from 'react-native-paper';
 
 export default function EditBook({ navigation }) {
     const [bookTitle, setBookTitle] = useState('');
@@ -8,6 +9,15 @@ export default function EditBook({ navigation }) {
     const [bookCategory, setBookCategory] = useState('');
     const [bookDescription, setBookDescription] = useState('');
     const [imageUri, setImageUri] = useState(null);
+
+    const [selectedCategory, setSelectedCategory] = useState('Fiction'); // Default category
+    const [visible, setVisible] = useState(false); // Dropdown visibility state
+    const showMenu = () => setVisible(true);
+    const hideMenu = () => setVisible(false);
+    const onCategorySelect = (category) => {
+        setSelectedCategory(category);
+        hideMenu();
+    };
 
     const handleSave = () => {
         if (bookTitle && bookPrice && bookCategory && bookDescription) {
@@ -41,7 +51,7 @@ export default function EditBook({ navigation }) {
     return (
         <View style={styles.container}>
             <Image source={require('./assets/bird.png')} style={styles.image} />
-            <View style={styles.line}/>
+            <View style={styles.line} />
             {/* Input fields */}
             <View style={styles.inputContainer}>
                 <TextInput
@@ -56,12 +66,18 @@ export default function EditBook({ navigation }) {
                     value='RM 20'
                     onChangeText={setBookTitle}
                 />
-                <TextInput
-                    style={styles.input}
-                    placeholder="Category"
-                    value="Fiction"
-                    onChangeText={setBookTitle}
-                />
+                <Menu
+                    visible={visible}
+                    onDismiss={hideMenu}
+                    anchor={<Pressable onPress={showMenu}><TextInput style={styles.input} value={selectedCategory} editable={false} /></Pressable>}
+                >
+                    <Menu.Item onPress={() => onCategorySelect('Fiction')} title="Fiction" />
+                    <Menu.Item onPress={() => onCategorySelect('Non-Fiction')} title="Non-Fiction" />
+                    <Menu.Item onPress={() => onCategorySelect('Science Fiction')} title="Science Fiction" />
+                    <Menu.Item onPress={() => onCategorySelect('Horror')} title="Horror" />
+                    <Menu.Item onPress={() => onCategorySelect('Romance')} title="Romance" />
+                    <Menu.Item onPress={() => onCategorySelect('Others')} title="Others" />
+                </Menu>
                 <TextInput
                     style={styles.input}
                     placeholder="Description"
