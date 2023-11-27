@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { CheckBox } from 'react-native-elements';
 import Toast from 'react-native-toast-message';
+import { FAB } from 'react-native-paper';
 
 export default function Shipping({ navigation }) {
     const [isChecked1, setIsChecked1] = useState(false);
@@ -19,6 +20,12 @@ export default function Shipping({ navigation }) {
 
     return (
         <View style={styles.container}>
+            <FAB
+                style={styles.fab}
+                label='Add New Address'
+                icon="plus"
+                onPress={() => navigation.navigate('AddAddress')}
+            />
             <Text style={styles.title}>Shipping Address</Text>
 
             <View style={styles.card}>
@@ -68,13 +75,6 @@ export default function Shipping({ navigation }) {
                     />
                 </View>
             </View>
-
-            <View style={styles.addNewAddress}>
-                <Text style={styles.addNewAddressText}>Add New Address</Text>
-                <Pressable style={styles.addButton} onPress={() => navigation.navigate('AddAddress')}>
-                    <Icon name="plus" size={30} color="white" />
-                </Pressable>
-            </View>
             <Toast ref={(ref) => Toast.setRef(ref)} />
         </View>
     );
@@ -86,6 +86,13 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         margin: 12,
+    },
+    fab: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 0,
+        backgroundColor: 'black',
     },
     title: {
         fontWeight: 'bold',
@@ -130,32 +137,6 @@ const styles = StyleSheet.create({
     },
     useAddressText: {
         marginLeft: 5,
-    },
-    addNewAddress: {
-        position: 'absolute',
-        bottom: 20,
-        right: 20,
-        flexDirection: 'row',
-        alignItems: 'center',
-    },
-    addNewAddressText: {
-        marginRight: 10,
-    },
-    addButton: {
-        backgroundColor: 'black',
-        borderRadius: 50,
-        width: 50,
-        height: 50,
-        alignItems: 'center',
-        justifyContent: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.8,
-        shadowRadius: 3.84,
-        elevation: 5,
     },
     deleteButton: {
         backgroundColor: 'black',

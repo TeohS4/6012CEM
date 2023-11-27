@@ -1,7 +1,8 @@
 import React from 'react';
-import { View, Text, StyleSheet, Image, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Image, Pressable, Share } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Toast from 'react-native-toast-message';
+import { FAB, Chip } from 'react-native-paper';
 
 export default function BookDetails({ navigation }) {
     const addMsg = () => {
@@ -13,13 +14,51 @@ export default function BookDetails({ navigation }) {
             position: 'top',
         });
     };
+    const handleShare = async () => {
+        try {
+            const result = await Share.share({
+                message: 'Check out this book :)',
+            });
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    console.log('Shared via:', result.activityType);
+                } else {
+                    console.log('Shared');
+                }
+            } else if (result.action === Share.dismissedAction) {
+                console.log('Dismissed');
+            }
+        } catch (error) {
+            console.error('Error sharing:', error.message);
+        }
+    };
 
     return (
         <View style={styles.container}>
+            <FAB
+                icon="star"
+                color='yellow'
+                style={styles.review}
+                onPress={() => navigation.navigate('Reviews')}
+                variant='secondary'
+            />
+            <FAB
+                icon="share"
+                style={styles.share}
+                color='white'
+                onPress={handleShare}
+                variant='secondary'
+            />
             <View style={styles.content}>
                 {/* Book Title */}
                 <Text style={styles.title}>The Shining</Text>
-
+                <Chip
+                    icon="book"
+                    textStyle={styles.categoryText}
+                    style={styles.categoryChip}
+                >
+                    Horror
+                </Chip>
                 {/* Image and Description Bar */}
                 <Image source={require('./assets/shining.png')} style={styles.image} />
                 <View style={styles.bar}>
@@ -68,6 +107,28 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    categoryChip: {
+        alignContent: 'center',
+        backgroundColor: '#006400',
+        borderRadius: 20,
+        margin: 7,
+    },
+    categoryText: {
+        color: 'white',
+        fontWeight: 'bold',
+    },
+    share: {
+        position: 'absolute',
+        top: 30,
+        right: 20,
+        zIndex: 1,
+    },
+    review: {
+        position: 'absolute',
+        top: 30,
+        left: 20,
+        zIndex: 1,
+    },
     content: {
         width: '80%',
         alignItems: 'center',
@@ -75,7 +136,6 @@ const styles = StyleSheet.create({
     title: {
         fontWeight: 'bold',
         fontSize: 18,
-        marginBottom: 10,
         paddingTop: 12,
     },
     bar: {
@@ -89,8 +149,8 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     image: {
-        width: 140,
-        height: 220,
+        width: 130,
+        height: 200,
         borderRadius: 20,
         marginBottom: 20,
     },
@@ -126,7 +186,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginLeft: 20,
         marginRight: 20,
-        
+
     },
     btn: {
         backgroundColor: 'black',
@@ -136,7 +196,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 20,
         height: 50,
-        marginRight: '2%', 
+        marginRight: '2%',
     },
     btnWish: {
         backgroundColor: 'blue',
@@ -146,7 +206,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         marginTop: 20,
         height: 50,
-        marginLeft: '2%', 
+        marginLeft: '2%',
     },
     btnText: {
         color: 'white',

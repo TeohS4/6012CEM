@@ -3,6 +3,7 @@ import { Pressable, Image, View, Text, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Toast from 'react-native-toast-message';
 import { CheckBox } from 'react-native-elements';
+import { FAB } from 'react-native-paper';
 
 export default function PaymentMethod({ navigation }) {
   const [isChecked, setIsChecked] = useState(false);
@@ -18,6 +19,13 @@ export default function PaymentMethod({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <FAB
+        style={styles.fab}
+        icon="plus"
+        label='Add New Card'
+        onPress={() => navigation.navigate('AddCard')}
+      />
+      <Toast ref={(ref) => Toast.setRef(ref)} />
       <Text style={styles.title}>My Cards</Text>
       <View style={styles.card}>
         <View style={styles.cardDetails}>
@@ -43,12 +51,6 @@ export default function PaymentMethod({ navigation }) {
         />
       </View>
 
-      <View style={styles.addNewCard}>
-        <Text style={styles.addNewCardText}>Add New Card</Text>
-        <Pressable style={styles.addButton} onPress={() => navigation.navigate('AddCard')}>
-          <Icon name="plus" size={30} color="white" />
-        </Pressable>
-      </View>
       <Toast ref={(ref) => Toast.setRef(ref)} />
     </View>
   );
@@ -59,6 +61,13 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#fff',
+  },
+  fab: {
+    position: 'absolute',
+    margin: 16,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'black',
   },
   title: {
     fontWeight: 'bold',
@@ -109,32 +118,6 @@ const styles = StyleSheet.create({
   checkbox: {
     backgroundColor: 'transparent',
     borderColor: 'transparent',
-  },
-  addNewCard: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  addNewCardText: {
-    right: 10
-  },
-  addButton: {
-    backgroundColor: 'black',
-    borderRadius: 50,
-    width: 50,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.8,
-    shadowRadius: 3.84,
-    elevation: 5,
   },
   deleteButton: {
     marginTop: 13,

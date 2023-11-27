@@ -15,6 +15,9 @@ export default function Profile({ navigation }) {
           <Text style={styles.nameText}>TEOH WEI JIE</Text>
           <Text style={styles.emailText}>weijieteoh26@gmail.com</Text>
         </View>
+        <Pressable onPress={() => navigation.navigate('EditProfile')}>
+          <Icon name="edit" size={24} color="blue" style={styles.editIcon} />
+        </Pressable>
       </View>
 
       <View style={styles.options}>
@@ -129,5 +132,8 @@ const styles = StyleSheet.create({
     color: 'white',
     fontWeight: 'bold',
     fontSize: 18,
+  },
+  editIcon: {
+    marginLeft: 70,
   },
 });

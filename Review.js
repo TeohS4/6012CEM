@@ -34,7 +34,7 @@ export default function Reviews({ navigation }) {
                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                         <Icon name="user-circle" size={20} color="black" />
                         <Text style={{ marginLeft: 10 }}>Ng Yu Ernn</Text>
-                        <Text style={{color:'grey'}}>25 Nov 2023</Text>
+                        <Text style={{color:'grey'}}>        Posted on 25 Nov 2023</Text>
                     </View>
                     <View style={styles.starContainer}>
                         {[...Array(5)].map((_, index) => (
