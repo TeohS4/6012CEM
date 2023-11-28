@@ -61,8 +61,6 @@ export default function Books({ navigation }) {
     },
   ];
 
-
-
   const handlePress = (category) => {
     setSelectedCategory(category);
   };

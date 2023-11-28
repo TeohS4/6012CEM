@@ -15,6 +15,7 @@ export default function EditProfile({ navigation }) {
 
     return (
         <View style={styles.container}>
+        {/* Edit Profile Section */}
             <View style={styles.profileContainer}>
                 <Image
                     source={require('./assets/icebear.png')}
@@ -22,7 +23,16 @@ export default function EditProfile({ navigation }) {
                 />
                 <Text style={styles.usernameText}>Teoh Wei Jie</Text>
             </View>
+            {/* Text Input */}
             <View style={styles.inputContainer}>
+            <View style={styles.input}>
+                    <Icon name="user" size={20} color="black" style={styles.icon} />
+                    <TextInput
+                        style={styles.textInput}
+                        placeholder="Username"
+                        value="Teoh Wei Jie"
+                    />
+                </View>
                 <View style={styles.input}>
                     <Icon name="envelope" size={20} color="black" style={styles.icon} />
                     <TextInput
@@ -40,6 +50,7 @@ export default function EditProfile({ navigation }) {
                     />
                 </View>
             </View>
+            {/* Pressable button */}
             <Pressable style={styles.button} onPress={updateMsg}>
                 <Text style={styles.buttonText}>Update</Text>
             </Pressable>
